@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard de red</title>
+  <link href="/css/dashboard.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-900 text-white">
+  <div class="flex h-screen">
+    <!-- Main Panel -->
+    <main class="flex-1 p-6 overflow-auto">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold">Dashboard de red</h2>
+        <label class="flex items-center space-x-2 cursor-pointer select-none">
+          <input type="checkbox" id="toggleSimulados" class="form-checkbox h-5 w-5 text-green-500" />
+        </label>
+        <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded transition">
+          Cerrar sesión
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div class="bg-gray-800 p-6 rounded flex flex-col justify-between min-h-[180px]">
+          <h3 class="text-gray-400 mb-3">Latencia</h3>
+          <p class="text-4xl font-bold"><span id="latency">--</span></p>
+          <div class="w-full h-28 mt-5">
+            <canvas id="latencyChart"></canvas>
+          </div>
+        </div>
+        <div class="bg-gray-800 p-6 rounded flex flex-col justify-between min-h-[180px]">
+          <h3 class="text-gray-400 mb-3">Velocidad</h3>
+          <p class="text-4xl font-bold"><span id="speed">--</span></p>
+          <div class="w-full h-28 mt-5">
+            <canvas id="speedChart"></canvas>
+          </div>
+        </div>
+        <div class="bg-gray-800 p-6 rounded flex flex-col justify-between min-h-[180px]">
+          <h3 class="text-gray-400 mb-3">Dispositivos</h3>
+          <p class="text-4xl font-bold"><span id="devices">--</span></p>
+          <div class="w-full h-28 mt-5">
+            <canvas id="devicesChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dispositivos detectados -->
+      <div class="bg-gray-800 p-4 rounded mt-6">
+        <h3 class="font-semibold mb-4">Dispositivos</h3>
+        <div class="max-h-72 overflow-y-auto rounded border border-gray-700">
+          <table class="w-full text-sm border-separate" style="border-spacing: 0 0.5rem;">
+            <thead class="text-gray-400 border-b border-gray-700 bg-gray-700">
+              <tr>
+                <th class="text-left py-2 px-3">Dirección IP</th>
+                <th class="text-left py-2 px-3">MAC</th>
+                <th class="text-left py-2 px-3">Nombre</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-dispositivos" class="text-gray-200">
+              <!-- Los dispositivos se insertarán aquí dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Uso de Protocolos y Tráfico por Sitio -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 mt-6">
+        <div class="bg-gray-800 p-6 rounded">
+          <h3 class="font-semibold mb-4">Uso de Protocolos</h3>
+          <div class="h-64">
+            <canvas id="protocolChart" class="w-full h-full"></canvas>
+          </div>
+        </div>
+        <div class="bg-gray-800 p-6 rounded">
+          <h3 class="font-semibold mb-4">Tráfico por Sitio</h3>
+          <div class="h-64">
+            <canvas id="domainChart" class="w-full h-full"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sitios Web Más Visitados -->
+      <div class="bg-gray-800 p-4 rounded mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-semibold">Sitios Web Más Visitados</h3>
+          <select id="filtro-top-sites" class="bg-gray-700 text-white rounded px-2 py-1 text-sm">
+            <option value="1h">Última hora</option>
+            <option value="24h">Últimas 24h</option>
+            <option value="1w" selected>Última semana</option>
+          </select>
+        </div>
+        <table id="tabla-sitios" class="w-full text-sm">
+          <thead class="text-gray-400 border-b border-gray-700">
+            <tr>
+              <th class="text-left py-2">Sitio Web</th>
+              <th class="text-left py-2">Protocolo</th>
+              <th class="text-left py-2">Visitas</th>
+              <th class="text-left py-2">Tráfico</th>
+              <th class="text-left py-2">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-top-sitios" class="text-gray-200">
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/dashboard.js"></script>
+</html>
